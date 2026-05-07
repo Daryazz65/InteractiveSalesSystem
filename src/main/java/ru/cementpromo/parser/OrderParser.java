@@ -1,12 +1,12 @@
 package ru.cementpromo.parser;
 
 import ru.cementpromo.model.Order;
-import java.io.IOException;
 import java.nio.file.Path;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 public interface OrderParser {
-    List<Order> parse(Path file) throws IOException;
+    DateTimeFormatter DATE_FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss");
+
+    List<Order> parse(Path file);
 }
-
-
