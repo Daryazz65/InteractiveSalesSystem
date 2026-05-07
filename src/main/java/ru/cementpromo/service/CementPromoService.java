@@ -20,10 +20,6 @@ public class CementPromoService {
         this.discountStep = discountStep;
     }
 
-    public CementPromoService() {
-        this(new BigDecimal("10"), new BigDecimal("0.50"), new BigDecimal("0.05"));
-    }
-
     public Map<String, BigDecimal> calculate(List<Order> allOrders) {
         List<Order> sortedOrders = allOrders.stream()
                 .sorted((o1, o2) -> o1.time().compareTo(o2.time()))

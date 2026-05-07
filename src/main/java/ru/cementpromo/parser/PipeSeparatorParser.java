@@ -1,7 +1,6 @@
 package ru.cementpromo.parser;
 
 import ru.cementpromo.model.Order;
-import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.time.LocalDateTime;
@@ -15,19 +14,20 @@ public class PipeSeparatorParser implements OrderParser {
             DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss");
 
     @Override
-    public List<Order> parse(Path file) throws IOException {
+    public List<Order> parse(Path file) {
         try (Stream<String> lines = Files.lines(file)) {
             return lines
                     .map(String::trim)
                     .filter(line -> !line.isEmpty())
                     .map(this::stringToOrder)
                     .toList();
+        } catch (java.io.IOException e) {
+            throw new IORuntimeException("Ошибка чтения файла: " + file, e);
         }
     }
 
     private Order stringToOrder(String line) {
         String[] parts = line.split("\\|");
-
         String timeStr = parts[0].trim();
         String company = parts[1].trim();
         int kg = Integer.parseInt(parts[2].trim());
