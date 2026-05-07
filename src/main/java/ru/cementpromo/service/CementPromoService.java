@@ -10,9 +10,19 @@ import java.util.stream.IntStream;
 
 public class CementPromoService {
 
-    private static final BigDecimal PRICE_PER_KG = new BigDecimal("10");
-    private static final BigDecimal START_DISCOUNT = new BigDecimal("0.50");
-    private static final BigDecimal DISCOUNT_STEP = new BigDecimal("0.05");
+    private final BigDecimal pricePerKg;
+    private final BigDecimal startDiscount;
+    private final BigDecimal discountStep;
+
+    public CementPromoService(BigDecimal pricePerKg, BigDecimal startDiscount, BigDecimal discountStep) {
+        this.pricePerKg = pricePerKg;
+        this.startDiscount = startDiscount;
+        this.discountStep = discountStep;
+    }
+
+    public CementPromoService() {
+        this(new BigDecimal("10"), new BigDecimal("0.50"), new BigDecimal("0.05"));
+    }
 
     public Map<String, BigDecimal> calculate(List<Order> allOrders) {
         List<Order> sortedOrders = allOrders.stream()
@@ -35,14 +45,14 @@ public class CementPromoService {
     }
 
     private BigDecimal getDiscountByIndex(int index) {
-        BigDecimal calculated = START_DISCOUNT
-                .subtract(DISCOUNT_STEP.multiply(BigDecimal.valueOf(index)));
+        BigDecimal calculated = startDiscount
+                .subtract(discountStep.multiply(BigDecimal.valueOf(index)));
 
         return calculated.max(BigDecimal.ZERO);
     }
 
     private BigDecimal calculateCost(int kg, BigDecimal discount) {
-        BigDecimal basePrice = PRICE_PER_KG.multiply(BigDecimal.valueOf(kg));
+        BigDecimal basePrice = pricePerKg.multiply(BigDecimal.valueOf(kg));
         BigDecimal multiplier = BigDecimal.ONE.subtract(discount);
 
         return basePrice.multiply(multiplier).setScale(2, RoundingMode.HALF_UP);
