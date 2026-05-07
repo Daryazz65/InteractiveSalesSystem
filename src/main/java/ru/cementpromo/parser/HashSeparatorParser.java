@@ -10,9 +10,8 @@ import java.util.List;
 import java.util.stream.Stream;
 
 public class HashSeparatorParser implements OrderParser {
-
     private static final DateTimeFormatter DATE_FORMATTER =
-            DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+            DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss");
 
     @Override
     public List<Order> parse(Path file) throws IOException {
