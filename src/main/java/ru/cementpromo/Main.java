@@ -13,11 +13,7 @@ public class Main {
         Path outputFile = Paths.get("result.txt");
 
         OrderFileService fileService = new OrderFileService();
-        CementPromoService promoService = new CementPromoService(
-                new BigDecimal("10"),
-                new BigDecimal("0.50"),
-                new BigDecimal("0.05")
-        );
+        CementPromoService promoService = new CementPromoService(); // Без параметров!
 
         OrderManagerService manager = new OrderManagerService(fileService, promoService);
 
