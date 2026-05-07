@@ -17,7 +17,18 @@ public class OrderManagerService {
 
     public void processOrders(Path inputPath, Path outputPath) {
         List<Order> orders = fileService.readAllOrders(inputPath);
-        Map<String, BigDecimal> results = promoService.calculate(orders);
+
+        BigDecimal pricePerKg = new BigDecimal("10");
+        BigDecimal startDiscount = new BigDecimal("0.50");
+        BigDecimal discountStep = new BigDecimal("0.05");
+
+        Map<String, BigDecimal> results = promoService.calculate(
+                orders,
+                pricePerKg,
+                startDiscount,
+                discountStep
+        );
+
         fileService.writeResults(outputPath, results);
     }
 }
