@@ -1,4 +1,6 @@
 package ru.cementpromo.service;
+
+import ru.cementpromo.exception.IORuntimeException;
 import org.mockito.InOrder;
 import ru.cementpromo.model.Order;
 
@@ -11,6 +13,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.io.IOException;
 import java.math.BigDecimal;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -77,8 +80,8 @@ class OrderManagerServiceTest{
     @Test
     void processOrders_shouldThrowExceptionWhenReadFails() {
         when(fileService.readAllOrders(any(Path.class)))
-                .thenThrow(new RuntimeException("File read error"));
-        assertThrows(RuntimeException.class, () ->
+                .thenThrow(new IORuntimeException("File read error", new IOException()));
+        assertThrows(IORuntimeException.class, () ->
                 orderManagerService.processOrders(inputPath, outputPath)
         );
     }

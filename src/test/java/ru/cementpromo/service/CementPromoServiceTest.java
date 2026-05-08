@@ -62,26 +62,22 @@ class CementPromoServiceTest {
     @Test
     void calculate_manyOrders_shouldNotGoBelowZeroDiscount() {
         List<Order> orders = List.of(
-                new Order(LocalDateTime.of(2023, 10, 1, 10, 0), "CompanyA", 100),
-                new Order(LocalDateTime.of(2023, 10, 1, 10, 1), "CompanyA", 100),
-                new Order(LocalDateTime.of(2023, 10, 1, 10, 2), "CompanyA", 100),
-                new Order(LocalDateTime.of(2023, 10, 1, 10, 3), "CompanyA", 100),
-                new Order(LocalDateTime.of(2023, 10, 1, 10, 4), "CompanyA", 100),
-                new Order(LocalDateTime.of(2023, 10, 1, 10, 5), "CompanyA", 100),
-                new Order(LocalDateTime.of(2023, 10, 1, 10, 6), "CompanyA", 100),
-                new Order(LocalDateTime.of(2023, 10, 1, 10, 7), "CompanyA", 100),
-                new Order(LocalDateTime.of(2023, 10, 1, 10, 8), "CompanyA", 100),
-                new Order(LocalDateTime.of(2023, 10, 1, 10, 9), "CompanyA", 100),
-                new Order(LocalDateTime.of(2023, 10, 1, 10, 10), "CompanyA", 1000)
+                new Order(LocalDateTime.of(2023, 10, 1, 10, 0), "CompanyA", 1000),
+                new Order(LocalDateTime.of(2023, 10, 1, 10, 1), "CompanyA", 2000),
+                new Order(LocalDateTime.of(2023, 10, 1, 10, 2), "CompanyA", 1500),
+                new Order(LocalDateTime.of(2023, 10, 1, 10, 3), "CompanyA", 3000)
         );
+        BigDecimal testStartDiscount = new BigDecimal("0.07");  // 7%
+        BigDecimal testDiscountStep = new BigDecimal("0.03");   // 3%
         Map<String, BigDecimal> result = promoService.calculate(
                 orders,
                 pricePerKg,
-                startDiscount,
-                discountStep
+                testStartDiscount,
+                testDiscountStep
         );
         assertTrue(result.containsKey("CompanyA"));
-        assertNotNull(result.get("CompanyA"));
+        BigDecimal expectedTotal = new BigDecimal("73350.00");
+        assertEquals(expectedTotal, result.get("CompanyA"));
     }
 
     @Test
