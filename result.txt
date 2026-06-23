@@ -1,0 +1,12 @@
+Pyramid - 166650.00
+Electricity - 73600.00
+Preparatory - 310445.00
+Industrial - 176000.00
+Power Engineer - 710500.00
+Mosque - 662400.00
+Carryover - 593400.00
+Resident - 112200.00
+Fossil - 362600.00
+Atomic - 250000.00
+Recovery - 119070.00
+Ancillary - 600000.00
